@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Logs>
+    <logs>
+        <fechaInvocacion>2021-09-11T16:47:57.117814800</fechaInvocacion>
+        <operacion>Division</operacion>
+        <user>Nat</user>
+    </logs>
+    <logs>
+        <fechaInvocacion>2021-09-11T17:18:46.891502700</fechaInvocacion>
+        <operacion>Division</operacion>
+        <user>Pedro</user>
+    </logs>
+</Logs>
