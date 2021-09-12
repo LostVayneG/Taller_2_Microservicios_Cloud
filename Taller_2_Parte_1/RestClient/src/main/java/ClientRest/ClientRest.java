@@ -27,8 +27,9 @@ public class ClientRest {
         int opcion = 1;
 
         while(opcion != 0){
+            System.out.println("\n");
             System.out.println("========== Opciones ==========");
-            System.out.println("1. Mostrar pasesos");
+            System.out.println("1. Mostrar paseos");
             System.out.println("2. Eliminar paseo");
             System.out.println("3. Actualizar paseo");
             System.out.println("4. Agregar paseo");

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Paseos>
     <Paseo>
-        <fecha>2021-09-04T16:40:49.378-05:00</fecha>
-        <id>0</id>
-        <lugarDestino>Bogota</lugarDestino>
-        <lugarOrigen>Pachaquiaro</lugarOrigen>
+        <fecha>2021-09-12T13:26:54.233-05:00</fecha>
+        <id>2</id>
+        <lugarDestino>Villavicencio</lugarDestino>
+        <lugarOrigen>Bogota</lugarOrigen>
         <nombre>Vacas</nombre>
     </Paseo>
     <Paseo>
-        <fecha>2021-09-04T16:41:05.565-05:00</fecha>
-        <id>0</id>
-        <lugarDestino>Pachaquiaro</lugarDestino>
-        <lugarOrigen>Bogota</lugarOrigen>
-        <nombre>Regreso</nombre>
+        <fecha>2021-09-12T13:31:30.814-05:00</fecha>
+        <id>3</id>
+        <lugarDestino>New york</lugarDestino>
+        <lugarOrigen>Cartagena</lugarOrigen>
+        <nombre>Vacaciones</nombre>
     </Paseo>
 </Paseos>

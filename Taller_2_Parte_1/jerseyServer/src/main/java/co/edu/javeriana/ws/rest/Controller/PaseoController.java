@@ -16,29 +16,23 @@ import java.util.Collection;
 import java.util.List;
 
 public class PaseoController {
-    @XmlElement
-    private ArrayList<Paseo> paseos;
-    private int paseoIdSequence;
 
     private final String FILE_NAME_PASEOSXML = "Paseos.xml";
 
     public PaseoController(){
-        this.paseos = new ArrayList<>();
-        this.paseoIdSequence = 0;
-        this.loadPaseos();
     }
 
     public Paseo createPaseo(Paseo newPaseo){
-        newPaseo.setId(paseoIdSequence);
-        this.paseoIdSequence++;
-        this.paseos.add(newPaseo);
-        this.persistPaseos();
+        ArrayList<Paseo> paseos = loadPaseos();
+        newPaseo.setId(getIdSecuence(paseos));
+        paseos.add(newPaseo);
+        this.persistPaseos(paseos);
         return newPaseo;
     }
 
-    public void persistPaseos(){
+    public void persistPaseos(ArrayList<Paseo> paseos){
         try {
-            ArchivoPaseo archivoPaseo = new ArchivoPaseo(this.paseos);
+            ArchivoPaseo archivoPaseo = new ArchivoPaseo(paseos);
             BufferedWriter output = Files.newBufferedWriter(Path.of(FILE_NAME_PASEOSXML));
             JAXB.marshal(archivoPaseo, output);
 
@@ -48,30 +42,33 @@ public class PaseoController {
         }
     }
 
-    public void loadPaseos(){
+    public ArrayList<Paseo> loadPaseos(){
         try {
             BufferedReader input = Files.newBufferedReader(Path.of(FILE_NAME_PASEOSXML));
             ArchivoPaseo archivoPaseo = JAXB.unmarshal(input, ArchivoPaseo.class);
-            this.paseos = (ArrayList<Paseo>) archivoPaseo.getPaseos();
-            actualizeCurrentId();
+            return (ArrayList<Paseo>) archivoPaseo.getPaseos();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error unmarshall");
         }
+        return new ArrayList<Paseo>();
     }
 
-    private void actualizeCurrentId(){
+    private int getIdSecuence(ArrayList<Paseo> paseos){
+        int paseoIdSequence = 0;
         for (Paseo p:
-             this.paseos) {
-            if(p.getId() > this.paseoIdSequence){
-                this.paseoIdSequence = p.getId() + 1;
+             paseos) {
+            if(p.getId() >= paseoIdSequence){
+                paseoIdSequence = p.getId() + 1;
             }
         }
+        return paseoIdSequence;
     }
 
     public Paseo findById(int id){
+        ArrayList<Paseo> paseos = loadPaseos();
         for (Paseo p:
-             this.paseos) {
+             paseos) {
             if(p.getId() == id){
                 return p;
             }
@@ -80,28 +77,40 @@ public class PaseoController {
     }
 
     public boolean removePaseo(int id){
-        Paseo paseoToRemove = this.findById(id);
+        ArrayList<Paseo> paseos = loadPaseos();
+        Paseo paseoToRemove = null;
+        for (Paseo p:
+                paseos) {
+            if(p.getId() == id){
+                paseoToRemove = p;
+            }
+        }
         if(paseoToRemove != null){
-            this.paseos.remove(paseoToRemove);
-            this.persistPaseos();
-            actualizeCurrentId();
+            paseos.remove(paseoToRemove);
+            this.persistPaseos(paseos);
             return true;
         }
         return false;
     }
 
     public Paseo updatePaseo(Paseo paseo){
-        Paseo paseoToUpdate = this.findById(paseo.getId());
+        ArrayList<Paseo> paseos = loadPaseos();
+        Paseo paseoToUpdate = null;
+        for (Paseo p:
+             paseos) {
+            if(p.getId() == paseo.getId()){
+                paseoToUpdate = p;
+            }
+        }
         if(paseoToUpdate != null){
-            paseoToUpdate.setNombre(paseo.getNombre());
             paseoToUpdate.setLugarOrigen(paseo.getLugarOrigen());
             paseoToUpdate.setLugarDestino(paseo.getLugarDestino());
-            this.persistPaseos();
+            this.persistPaseos(paseos);
         }
         return paseoToUpdate;
     }
 
     public List<Paseo> getPaseos(){
-        return this.paseos;
+        return loadPaseos();
     }
 }
