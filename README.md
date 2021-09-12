@@ -1,5 +1,7 @@
 # Taller 2 Microservicios Cloud
+### Requisitos
 *Versión de java usada: Java 16*
+*Tener instalado maven ultima versión*
 
 ### URLS para probar los microservicios
 
